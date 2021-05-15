@@ -116,7 +116,7 @@ $(document).ready(function () {
     return tmp.textContent || tmp.innerText || "";
   }
 
-  // Set bot response in result_div
+  // Set bot response
   function setBotResponse(val) {
     setTimeout(function () {
       if ($.trim(val) == "") {
@@ -126,6 +126,7 @@ $(document).ready(function () {
         $(BotResponse).appendTo("#result_div")
       } else {
         val = val.replace(new RegExp("botResult\r?\n", "g"), "<br />")
+        val = urlify(val)
         var BotResponse =
           '<p class="botResult">' +
           val +
@@ -279,5 +280,9 @@ $(document).ready(function () {
       }
       end_chat()
     }
+  }
+  function urlify(text) {
+    var urlRegex = /(https?:\/\/[^\s]+)/g;
+    return text.replace(urlRegex, '<a href="$1" target="_blank" rel="noopener">$1</a>')
   }
 })
